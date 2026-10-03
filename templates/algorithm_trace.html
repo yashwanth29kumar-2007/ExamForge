@@ -1,0 +1,740 @@
+{% extends "base.html" %}
+
+{% block title %}
+ExamForge | Algorithm Trace
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
+
+<div class="page-header">
+
+    <h1>
+        Algorithm Trace
+    </h1>
+
+    <p>
+        Visualize how ExamForge uses DAA algorithms to generate a question paper.
+    </p>
+
+</div>
+
+
+<!-- =========================================
+     ALGORITHM SUMMARY
+========================================= -->
+
+<div class="stats">
+
+    <div class="card">
+
+        <h3>TARGET MARKS</h3>
+
+        <p class="accent">
+            {{ paper["target_marks"] }}
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>QUESTIONS SELECTED</h3>
+
+        <p>
+            {{ paper["questions"]|length }}
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>FINAL MARKS</h3>
+
+        <p class="accent">
+            {{ paper["total_marks"] }}
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>SELECTED METHOD</h3>
+
+        <p style="font-size: 18px;">
+            {{ paper["method"] }}
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     ALGORITHM PIPELINE
+========================================= -->
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                ExamForge Algorithm Pipeline
+            </h2>
+
+            <p>
+                The question paper passes through multiple algorithmic stages.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div
+        style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        "
+    >
+
+
+        <!-- SORTING -->
+
+        <div class="trace-card">
+
+            <div
+                style="
+                    font-size: 12px;
+                    color: #00e5ff;
+                    margin-bottom: 8px;
+                    font-weight: 700;
+                "
+            >
+                STEP 01
+            </div>
+
+            <h3>
+                Sorting
+            </h3>
+
+            <p
+                style="
+                    color: #64748b;
+                    font-size: 12px;
+                    line-height: 1.6;
+                "
+            >
+                Questions are ordered using priority
+                and marks before selection.
+            </p>
+
+        </div>
+
+
+        <!-- GREEDY -->
+
+        <div class="trace-card">
+
+            <div
+                style="
+                    font-size: 12px;
+                    color: #a78bfa;
+                    margin-bottom: 8px;
+                    font-weight: 700;
+                "
+            >
+                STEP 02
+            </div>
+
+            <h3>
+                Greedy Selection
+            </h3>
+
+            <p
+                style="
+                    color: #64748b;
+                    font-size: 12px;
+                    line-height: 1.6;
+                "
+            >
+                The system attempts to build a valid
+                paper by selecting suitable questions.
+            </p>
+
+        </div>
+
+
+        <!-- BACKTRACKING -->
+
+        <div class="trace-card">
+
+            <div
+                style="
+                    font-size: 12px;
+                    color: #f59e0b;
+                    margin-bottom: 8px;
+                    font-weight: 700;
+                "
+            >
+                STEP 03
+            </div>
+
+            <h3>
+                Backtracking
+            </h3>
+
+            <p
+                style="
+                    color: #64748b;
+                    font-size: 12px;
+                    line-height: 1.6;
+                "
+            >
+                Alternative combinations are explored
+                when Greedy cannot satisfy the target.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     SORTING TRACE
+========================================= -->
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                01. Sorting Algorithm
+            </h2>
+
+            <p>
+                Priority-based question ordering
+            </p>
+
+        </div>
+
+        <span class="method-badge">
+            SORTING
+        </span>
+
+    </div>
+
+
+    <div class="trace-container">
+
+        {% for step in paper["sorting_trace"] %}
+
+        <div class="trace-card">
+
+            <div
+                style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                "
+            >
+
+                <div
+                    style="
+                        min-width: 34px;
+                        height: 34px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        background: rgba(0,229,255,0.10);
+                        border: 1px solid rgba(0,229,255,0.25);
+                        color: #00e5ff;
+                        font-weight: 700;
+                        font-size: 12px;
+                    "
+                >
+                    {{ step["step"] }}
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        {{ step["action"] }}
+                    </h3>
+
+                    <p
+                        style="
+                            color: #64748b;
+                            font-size: 12px;
+                            line-height: 1.6;
+                            margin-top: 5px;
+                        "
+                    >
+                        {{ step["details"] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     GREEDY TRACE
+========================================= -->
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                02. Greedy Algorithm
+            </h2>
+
+            <p>
+                Step-by-step question selection
+            </p>
+
+        </div>
+
+        <span class="method-badge">
+            GREEDY
+        </span>
+
+    </div>
+
+
+    <div class="trace-container">
+
+        {% for step in paper["greedy_trace"] %}
+
+        <div class="trace-card">
+
+            <div
+                style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                "
+            >
+
+                <div
+                    style="
+                        min-width: 34px;
+                        height: 34px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        background: rgba(167,139,250,0.10);
+                        border: 1px solid rgba(167,139,250,0.25);
+                        color: #a78bfa;
+                        font-weight: 700;
+                        font-size: 12px;
+                    "
+                >
+                    {{ step["step"] }}
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        {{ step["action"] }}
+                    </h3>
+
+                    <p
+                        style="
+                            color: #64748b;
+                            font-size: 12px;
+                            line-height: 1.6;
+                            margin-top: 5px;
+                        "
+                    >
+                        {{ step["details"] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     BACKTRACKING TRACE
+========================================= -->
+
+{% if paper["backtracking_trace"] %}
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                03. Backtracking Algorithm
+            </h2>
+
+            <p>
+                Search and backtrack decisions
+            </p>
+
+        </div>
+
+        <span class="method-badge">
+            BACKTRACKING
+        </span>
+
+    </div>
+
+
+    <div class="trace-container">
+
+        {% for step in paper["backtracking_trace"] %}
+
+        <div class="trace-card">
+
+            <div
+                style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                "
+            >
+
+                <div
+                    style="
+                        min-width: 34px;
+                        height: 34px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        background: rgba(245,158,11,0.10);
+                        border: 1px solid rgba(245,158,11,0.25);
+                        color: #f59e0b;
+                        font-weight: 700;
+                        font-size: 12px;
+                    "
+                >
+                    {{ step["step"] }}
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        {{ step["action"] }}
+                    </h3>
+
+                    <p
+                        style="
+                            color: #64748b;
+                            font-size: 12px;
+                            line-height: 1.6;
+                            margin-top: 5px;
+                        "
+                    >
+                        {{ step["details"] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                03. Backtracking
+            </h2>
+
+            <p>
+                Fallback algorithm status
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="no-results">
+
+        <h3>
+            Backtracking Not Required
+        </h3>
+
+        <p>
+            The Greedy algorithm successfully generated
+            a valid question paper, so Backtracking was
+            not required for this generation.
+        </p>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- =========================================
+     SELECTED QUESTIONS
+========================================= -->
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                Final Selected Questions
+            </h2>
+
+            <p>
+                Questions returned by the algorithm pipeline
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% for question in paper["questions"] %}
+
+    <div class="generated-question">
+
+        <div class="question-number">
+            {{ loop.index }}
+        </div>
+
+
+        <h3>
+            {{ question["question"] }}
+        </h3>
+
+
+        <div class="question-info">
+
+            <span class="badge">
+                Unit {{ question["unit"] }}
+            </span>
+
+            <span class="badge">
+                {{ question["topic"] }}
+            </span>
+
+            <span class="badge">
+                {{ question["difficulty"] }}
+            </span>
+
+            <span class="badge">
+                {{ question["marks"] }} Marks
+            </span>
+
+            <span class="badge">
+                Priority {{ question["priority"] }}
+            </span>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- =========================================
+     DAA COMPLEXITY
+========================================= -->
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                DAA Complexity Overview
+            </h2>
+
+            <p>
+                Complexity information for academic analysis
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="difficulty-grid">
+
+
+        <div class="difficulty-card">
+
+            <h3>
+                Sorting
+            </h3>
+
+            <p>
+                Python's built-in sorting is based on
+                Timsort.
+            </p>
+
+            <strong
+                style="
+                    display: block;
+                    margin-top: 10px;
+                    color: #00e5ff;
+                "
+            >
+                O(n log n)
+            </strong>
+
+        </div>
+
+
+        <div class="difficulty-card">
+
+            <h3>
+                Greedy
+            </h3>
+
+            <p>
+                Questions are scanned to construct
+                a valid selection.
+            </p>
+
+            <strong
+                style="
+                    display: block;
+                    margin-top: 10px;
+                    color: #a78bfa;
+                "
+            >
+                O(n)
+            </strong>
+
+        </div>
+
+
+        <div class="difficulty-card">
+
+            <h3>
+                Backtracking
+            </h3>
+
+            <p>
+                Alternative combinations can be explored
+                recursively.
+            </p>
+
+            <strong
+                style="
+                    display: block;
+                    margin-top: 10px;
+                    color: #f59e0b;
+                "
+            >
+                O(2ⁿ)
+            </strong>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     ACTIONS
+========================================= -->
+
+<div
+    style="
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    "
+>
+
+    <a
+        href="{{ url_for('generate') }}"
+        class="primary-btn"
+    >
+        ⚡ Generate New Paper
+    </a>
+
+
+    <a
+        href="{{ url_for('history') }}"
+        class="secondary-btn"
+    >
+        📚 View History
+    </a>
+
+</div>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<div class="footer">
+
+    ExamForge • Design and Analysis of Algorithms
+
+</div>
+
+
+{% endblock %}

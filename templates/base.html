@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}ExamForge{% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app-layout">
+
+
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                EF
+            </div>
+
+            <div>
+
+                <h1>
+                    ExamForge
+                </h1>
+
+                <span>
+                    DAA Intelligence
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <p class="sidebar-title">
+                MAIN MENU
+            </p>
+
+
+            <a
+                href="/"
+                class="sidebar-link"
+            >
+
+                <span class="nav-icon">
+                    ◈
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="/questions"
+                class="sidebar-link"
+            >
+
+                <span class="nav-icon">
+                    ▣
+                </span>
+
+                Question Bank
+
+            </a>
+
+
+            <a
+                href="/generate"
+                class="sidebar-link"
+            >
+
+                <span class="nav-icon">
+                    ⚡
+                </span>
+
+                Generate Paper
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <p class="sidebar-title">
+                ANALYSIS
+            </p>
+
+
+            <a
+                href="/trace"
+                class="sidebar-link"
+            >
+
+                <span class="nav-icon">
+                    🧠
+                </span>
+
+                Algorithm Trace
+
+            </a>
+
+
+            <a
+                href="/history"
+                class="sidebar-link"
+            >
+
+                <span class="nav-icon">
+                    📚
+                </span>
+
+                Paper History
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        System Online
+                    </strong>
+
+                    <small>
+                        ExamForge is ready
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="topbar-label">
+                    DAA EXAMINATION PLATFORM
+                </span>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="notification">
+                    🔔
+                </div>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        Y
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>
+                            Student
+                        </strong>
+
+                        <span>
+                            Administrator
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE CONTENT -->
+
+        <section class="page-content">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+</body>
+
+</html>

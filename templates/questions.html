@@ -1,0 +1,551 @@
+{% extends "base.html" %}
+
+{% block title %}
+ExamForge | Question Bank
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
+
+<div
+    style="
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    "
+>
+
+    <div class="page-header" style="margin-bottom: 0;">
+
+        <h1>
+            Question Bank
+        </h1>
+
+        <p>
+            Manage and explore your DAA examination questions.
+        </p>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('add_question') }}"
+        class="primary-btn"
+    >
+
+        + Add Question
+
+    </a>
+
+</div>
+
+
+
+<!-- =========================================
+     STATISTICS
+========================================= -->
+
+<div class="stats">
+
+
+    <div class="card">
+
+        <h3>
+            QUESTIONS FOUND
+        </h3>
+
+        <p class="accent">
+            {{ questions|length }}
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            SUBJECT
+        </h3>
+
+        <p>
+            DAA
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            UNITS
+        </h3>
+
+        <p>
+            5
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            STATUS
+        </h3>
+
+        <p class="accent">
+            Active
+        </p>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================
+     FILTER PANEL
+========================================= -->
+
+<div class="panel">
+
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                Filter Questions
+            </h2>
+
+            <p>
+                Narrow the question bank using the filters below.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <form
+        method="GET"
+        action="{{ url_for('questions') }}"
+    >
+
+        <div
+            style="
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            "
+        >
+
+
+            <!-- UNIT -->
+
+            <div class="form-group">
+
+                <label for="unit">
+                    UNIT
+                </label>
+
+                <select
+                    id="unit"
+                    name="unit"
+                >
+
+                    <option value="">
+                        All Units
+                    </option>
+
+                    <option
+                        value="1"
+                        {% if selected_unit == "1" %}
+                            selected
+                        {% endif %}
+                    >
+                        Unit 1
+                    </option>
+
+                    <option
+                        value="2"
+                        {% if selected_unit == "2" %}
+                            selected
+                        {% endif %}
+                    >
+                        Unit 2
+                    </option>
+
+                    <option
+                        value="3"
+                        {% if selected_unit == "3" %}
+                            selected
+                        {% endif %}
+                    >
+                        Unit 3
+                    </option>
+
+                    <option
+                        value="4"
+                        {% if selected_unit == "4" %}
+                            selected
+                        {% endif %}
+                    >
+                        Unit 4
+                    </option>
+
+                    <option
+                        value="5"
+                        {% if selected_unit == "5" %}
+                            selected
+                        {% endif %}
+                    >
+                        Unit 5
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- DIFFICULTY -->
+
+            <div class="form-group">
+
+                <label for="difficulty">
+                    DIFFICULTY
+                </label>
+
+                <select
+                    id="difficulty"
+                    name="difficulty"
+                >
+
+                    <option value="">
+                        All Difficulties
+                    </option>
+
+                    <option
+                        value="Easy"
+                        {% if selected_difficulty == "Easy" %}
+                            selected
+                        {% endif %}
+                    >
+                        Easy
+                    </option>
+
+                    <option
+                        value="Medium"
+                        {% if selected_difficulty == "Medium" %}
+                            selected
+                        {% endif %}
+                    >
+                        Medium
+                    </option>
+
+                    <option
+                        value="Hard"
+                        {% if selected_difficulty == "Hard" %}
+                            selected
+                        {% endif %}
+                    >
+                        Hard
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- TOPIC -->
+
+            <div class="form-group">
+
+                <label for="topic">
+                    TOPIC
+                </label>
+
+                <input
+                    type="text"
+                    id="topic"
+                    name="topic"
+                    value="{{ selected_topic }}"
+                    placeholder="Search topic..."
+                >
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FILTER BUTTONS -->
+
+        <div
+            style="
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            "
+        >
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+
+                🔎 Apply Filters
+
+            </button>
+
+
+            <a
+                href="{{ url_for('questions') }}"
+                class="secondary-btn"
+            >
+
+                Reset Filters
+
+            </a>
+
+        </div>
+
+
+    </form>
+
+</div>
+
+
+
+<!-- =========================================
+     QUESTION LIST
+========================================= -->
+
+<div class="question-section">
+
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                Available Questions
+            </h2>
+
+            <p>
+                {{ questions|length }}
+                question(s) available
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    {% if questions %}
+
+
+        {% for question in questions %}
+
+
+        <div class="question">
+
+
+            <!-- QUESTION NUMBER -->
+
+            <div
+                style="
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 14px;
+                "
+            >
+
+
+                <div
+                    style="
+                        min-width: 34px;
+                        width: 34px;
+                        height: 34px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 9px;
+                        background: #18243b;
+                        border: 1px solid #2a3a57;
+                        color: #00e5ff;
+                        font-size: 11px;
+                        font-weight: 800;
+                    "
+                >
+
+                    {{ loop.index }}
+
+                </div>
+
+
+                <div style="flex: 1;">
+
+
+                    <h3 style="margin-bottom: 10px;">
+
+                        {{ question["question"] }}
+
+                    </h3>
+
+
+                    <div class="question-info">
+
+
+                        <span class="badge">
+
+                            Unit {{ question["unit"] }}
+
+                        </span>
+
+
+                        <span class="badge">
+
+                            {{ question["topic"] }}
+
+                        </span>
+
+
+                        {% if question["difficulty"] == "Easy" %}
+
+                        <span
+                            class="badge"
+                            style="
+                                color: #4ade80;
+                                background: rgba(34,197,94,0.10);
+                            "
+                        >
+
+                            Easy
+
+                        </span>
+
+                        {% elif question["difficulty"] == "Medium" %}
+
+                        <span
+                            class="badge"
+                            style="
+                                color: #facc15;
+                                background: rgba(250,204,21,0.10);
+                            "
+                        >
+
+                            Medium
+
+                        </span>
+
+                        {% else %}
+
+                        <span
+                            class="badge"
+                            style="
+                                color: #f87171;
+                                background: rgba(248,113,113,0.10);
+                            "
+                        >
+
+                            Hard
+
+                        </span>
+
+                        {% endif %}
+
+
+                        <span class="badge">
+
+                            {{ question["marks"] }} Marks
+
+                        </span>
+
+
+                        <span class="badge">
+
+                            Priority {{ question["priority"] }}
+
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <!-- EMPTY STATE -->
+
+        <div class="no-results">
+
+            <h3>
+                No Questions Found
+            </h3>
+
+            <p>
+                Try changing your filters or add a new question.
+            </p>
+
+
+            <div style="margin-top: 18px;">
+
+                <a
+                    href="{{ url_for('add_question') }}"
+                    class="primary-btn"
+                >
+
+                    + Add Question
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<div class="footer">
+
+    ExamForge • Question Bank Management
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,526 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+ExamForge | Paper History
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
+
+<div class="page-header">
+
+    <h1>
+        Paper History
+    </h1>
+
+    <p>
+        View previously generated question papers and their algorithm details.
+    </p>
+
+</div>
+
+
+<!-- =========================================
+     SUMMARY
+========================================= -->
+
+<div class="stats">
+
+
+    <div class="card">
+
+        <h3>
+            TOTAL PAPERS
+        </h3>
+
+        <p class="accent">
+            {{ history|length }}
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            PLATFORM
+        </h3>
+
+        <p>
+            ExamForge
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            SUBJECT
+        </h3>
+
+        <p>
+            DAA
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            STATUS
+        </h3>
+
+        <p class="accent">
+            Active
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================
+     HISTORY TABLE
+========================================= -->
+
+<div class="panel">
+
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                Generated Papers
+            </h2>
+
+            <p>
+                Complete history of papers created by ExamForge.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('generate') }}"
+            class="primary-btn"
+        >
+            ⚡ Generate New Paper
+        </a>
+
+    </div>
+
+
+    {% if history %}
+
+
+    <div class="history-table-container">
+
+        <table class="history-table">
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        TOTAL MARKS
+                    </th>
+
+                    <th>
+                        DIFFICULTY
+                    </th>
+
+                    <th>
+                        METHOD
+                    </th>
+
+                    <th>
+                        QUESTIONS
+                    </th>
+
+                    <th>
+                        GENERATED
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for record in history %}
+
+
+                <tr>
+
+
+                    <!-- NUMBER -->
+
+                    <td>
+
+                        <span
+                            style="
+                                display: inline-flex;
+                                width: 30px;
+                                height: 30px;
+                                align-items: center;
+                                justify-content: center;
+                                border-radius: 8px;
+                                background: rgba(0,229,255,0.08);
+                                color: #00e5ff;
+                                font-weight: 700;
+                                font-size: 12px;
+                            "
+                        >
+
+                            {{ loop.index }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- TOTAL MARKS -->
+
+                    <td>
+
+                        <strong
+                            style="
+                                color: #00e5ff;
+                                font-size: 14px;
+                            "
+                        >
+
+                            {{ record["total_marks"] }}
+
+                        </strong>
+
+                        <span
+                            style="
+                                color: #64748b;
+                                font-size: 11px;
+                            "
+                        >
+                            Marks
+                        </span>
+
+                    </td>
+
+
+                    <!-- DIFFICULTY -->
+
+                    <td>
+
+                        <div
+                            style="
+                                display: flex;
+                                gap: 5px;
+                                flex-wrap: wrap;
+                            "
+                        >
+
+                            <span class="history-badge easy">
+
+                                E:
+                                {{ record["easy_count"] }}
+
+                            </span>
+
+
+                            <span class="history-badge medium">
+
+                                M:
+                                {{ record["medium_count"] }}
+
+                            </span>
+
+
+                            <span class="history-badge hard">
+
+                                H:
+                                {{ record["hard_count"] }}
+
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- METHOD -->
+
+                    <td>
+
+                        <span class="method-badge">
+
+                            {{ record["method"] }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- QUESTION COUNT -->
+
+                    <td>
+
+                        <strong>
+
+                            {{ record["question_count"] }}
+
+                        </strong>
+
+                        <span
+                            style="
+                                color: #64748b;
+                                font-size: 11px;
+                            "
+                        >
+                            questions
+                        </span>
+
+                    </td>
+
+
+                    <!-- DATE -->
+
+                    <td>
+
+                        <span
+                            style="
+                                color: #94a3b8;
+                                font-size: 12px;
+                            "
+                        >
+
+                            {{ record["created_at"] }}
+
+                        </span>
+
+                    </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- =====================================
+         EMPTY STATE
+    ====================================== -->
+
+    <div class="no-results">
+
+
+        <div
+            style="
+                font-size: 42px;
+                margin-bottom: 12px;
+            "
+        >
+            📚
+        </div>
+
+
+        <h3>
+            No Papers Generated Yet
+        </h3>
+
+
+        <p>
+            Your generated question papers will appear here.
+        </p>
+
+
+        <div style="margin-top: 20px;">
+
+            <a
+                href="{{ url_for('generate') }}"
+                class="primary-btn"
+            >
+
+                ⚡ Generate Your First Paper
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+<!-- =========================================
+     INFORMATION CARDS
+========================================= -->
+
+<div
+    style="
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-top: 25px;
+    "
+>
+
+
+    <!-- CARD 1 -->
+
+    <div class="trace-card">
+
+        <h3>
+            📊 Paper Records
+        </h3>
+
+        <p
+            style="
+                color: #64748b;
+                font-size: 12px;
+                line-height: 1.6;
+            "
+        >
+            Every successfully generated paper is
+            recorded in the ExamForge database.
+        </p>
+
+    </div>
+
+
+    <!-- CARD 2 -->
+
+    <div class="trace-card">
+
+        <h3>
+            🧠 Algorithm Tracking
+        </h3>
+
+        <p
+            style="
+                color: #64748b;
+                font-size: 12px;
+                line-height: 1.6;
+            "
+        >
+            The history records whether Greedy or
+            Backtracking was used for generation.
+        </p>
+
+    </div>
+
+
+    <!-- CARD 3 -->
+
+    <div class="trace-card">
+
+        <h3>
+            📄 PDF Export
+        </h3>
+
+        <p
+            style="
+                color: #64748b;
+                font-size: 12px;
+                line-height: 1.6;
+            "
+        >
+            Generated papers can be exported as
+            professionally formatted PDF documents.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================
+     ACTIONS
+========================================= -->
+
+<div
+    style="
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    "
+>
+
+    <a
+        href="{{ url_for('generate') }}"
+        class="primary-btn"
+    >
+
+        ⚡ Generate Paper
+
+    </a>
+
+
+    <a
+        href="{{ url_for('questions') }}"
+        class="secondary-btn"
+    >
+
+        ▣ Question Bank
+
+    </a>
+
+
+    <a
+        href="{{ url_for('trace') }}"
+        class="secondary-btn"
+    >
+
+        🧠 Algorithm Trace
+
+    </a>
+
+</div>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<div class="footer">
+
+    ExamForge • Design and Analysis of Algorithms • Paper History
+
+</div>
+
+
+{% endblock %}

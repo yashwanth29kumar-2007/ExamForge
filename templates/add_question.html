@@ -1,0 +1,418 @@
+{% extends "base.html" %}
+
+{% block title %}
+ExamForge | Add Question
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
+
+<div class="page-header">
+
+    <h1>
+        Add New Question
+    </h1>
+
+    <p>
+        Add a question to the ExamForge DAA question bank.
+    </p>
+
+</div>
+
+
+<!-- =========================================
+     FORM CONTAINER
+========================================= -->
+
+<div class="form-container">
+
+    <div
+        style="
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #1d2942;
+        "
+    >
+
+        <h2
+            style="
+                font-size: 19px;
+                margin-bottom: 7px;
+            "
+        >
+            Question Details
+        </h2>
+
+        <p
+            style="
+                color: #64748b;
+                font-size: 12px;
+            "
+        >
+            Provide the information used by ExamForge's
+            paper-generation algorithms.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================
+         ADD QUESTION FORM
+    ====================================== -->
+
+    <form
+        method="POST"
+        action="{{ url_for('add_question') }}"
+    >
+
+
+        <!-- QUESTION -->
+
+        <div class="form-group">
+
+            <label for="question">
+                QUESTION
+            </label>
+
+            <textarea
+                id="question"
+                name="question"
+                placeholder="Enter the examination question..."
+                required
+            ></textarea>
+
+        </div>
+
+
+        <!-- SUBJECT -->
+
+        <div class="form-group">
+
+            <label for="subject">
+                SUBJECT
+            </label>
+
+            <input
+                type="text"
+                id="subject"
+                name="subject"
+                value="DAA"
+                placeholder="Enter subject"
+                required
+            >
+
+        </div>
+
+
+        <!-- UNIT + TOPIC -->
+
+        <div
+            style="
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 18px;
+            "
+        >
+
+
+            <!-- UNIT -->
+
+            <div class="form-group">
+
+                <label for="unit">
+                    UNIT
+                </label>
+
+                <select
+                    id="unit"
+                    name="unit"
+                    required
+                >
+
+                    <option value="">
+                        Select Unit
+                    </option>
+
+                    <option value="1">
+                        Unit 1
+                    </option>
+
+                    <option value="2">
+                        Unit 2
+                    </option>
+
+                    <option value="3">
+                        Unit 3
+                    </option>
+
+                    <option value="4">
+                        Unit 4
+                    </option>
+
+                    <option value="5">
+                        Unit 5
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TOPIC -->
+
+            <div class="form-group">
+
+                <label for="topic">
+                    TOPIC
+                </label>
+
+                <input
+                    type="text"
+                    id="topic"
+                    name="topic"
+                    placeholder="Example: Sorting"
+                    required
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <!-- DIFFICULTY + MARKS + PRIORITY -->
+
+        <div
+            style="
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 18px;
+            "
+        >
+
+
+            <!-- DIFFICULTY -->
+
+            <div class="form-group">
+
+                <label for="difficulty">
+                    DIFFICULTY
+                </label>
+
+                <select
+                    id="difficulty"
+                    name="difficulty"
+                    required
+                >
+
+                    <option value="">
+                        Select Difficulty
+                    </option>
+
+                    <option value="Easy">
+                        Easy
+                    </option>
+
+                    <option value="Medium">
+                        Medium
+                    </option>
+
+                    <option value="Hard">
+                        Hard
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- MARKS -->
+
+            <div class="form-group">
+
+                <label for="marks">
+                    MARKS
+                </label>
+
+                <select
+                    id="marks"
+                    name="marks"
+                    required
+                >
+
+                    <option value="">
+                        Select Marks
+                    </option>
+
+                    <option value="2">
+                        2 Marks
+                    </option>
+
+                    <option value="5">
+                        5 Marks
+                    </option>
+
+                    <option value="10">
+                        10 Marks
+                    </option>
+
+                    <option value="15">
+                        15 Marks
+                    </option>
+
+                    <option value="20">
+                        20 Marks
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- PRIORITY -->
+
+            <div class="form-group">
+
+                <label for="priority">
+                    PRIORITY
+                </label>
+
+                <select
+                    id="priority"
+                    name="priority"
+                    required
+                >
+
+                    <option value="1">
+                        1 — Normal
+                    </option>
+
+                    <option value="2">
+                        2 — Medium
+                    </option>
+
+                    <option value="3">
+                        3 — High
+                    </option>
+
+                    <option value="4">
+                        4 — Very High
+                    </option>
+
+                    <option value="5">
+                        5 — Critical
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================
+             ALGORITHM INFORMATION
+        ================================== -->
+
+        <div
+            style="
+                margin-top: 10px;
+                margin-bottom: 25px;
+                padding: 18px;
+                border-radius: 12px;
+                background: #0b1325;
+                border: 1px solid #1d2942;
+            "
+        >
+
+            <div
+                style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 8px;
+                "
+            >
+
+                <span style="font-size: 17px;">
+                    🧠
+                </span>
+
+                <strong style="font-size: 13px;">
+                    Why does priority matter?
+                </strong>
+
+            </div>
+
+            <p
+                style="
+                    color: #64748b;
+                    font-size: 11px;
+                    line-height: 1.7;
+                "
+            >
+                ExamForge uses question priority and marks
+                during the Sorting stage before applying the
+                Greedy and Backtracking algorithms.
+            </p>
+
+        </div>
+
+
+        <!-- =================================
+             ACTION BUTTONS
+        ================================== -->
+
+        <div
+            style="
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                flex-wrap: wrap;
+            "
+        >
+
+            <a
+                href="{{ url_for('questions') }}"
+                class="secondary-btn"
+            >
+
+                Cancel
+
+            </a>
+
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+
+                ✓ Save Question
+
+            </button>
+
+        </div>
+
+
+    </form>
+
+</div>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<div class="footer">
+
+    ExamForge • Question Bank Management
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,400 @@
+{% extends "base.html" %}
+
+{% block title %}
+ExamForge | Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =========================================
+     DASHBOARD HEADER
+========================================= -->
+
+<div class="page-header">
+
+    <h1>
+        Welcome to ExamForge 👋
+    </h1>
+
+    <p>
+        Intelligent question paper generation powered by DAA algorithms.
+    </p>
+
+</div>
+
+
+<!-- =========================================
+     STATISTICS
+========================================= -->
+
+<div class="stats">
+
+
+    <!-- TOTAL QUESTIONS -->
+
+    <div class="card">
+
+        <h3>
+            TOTAL QUESTIONS
+        </h3>
+
+        <p class="accent">
+            {{ questions|length }}
+        </p>
+
+    </div>
+
+
+    <!-- TOTAL UNITS -->
+
+    <div class="card">
+
+        <h3>
+            ACADEMIC UNITS
+        </h3>
+
+        <p>
+            5
+        </p>
+
+    </div>
+
+
+    <!-- SUBJECT -->
+
+    <div class="card">
+
+        <h3>
+            SUBJECT
+        </h3>
+
+        <p>
+            DAA
+        </p>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="card">
+
+        <h3>
+            SYSTEM STATUS
+        </h3>
+
+        <p class="accent">
+            Ready
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     QUICK ACTIONS
+========================================= -->
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                Quick Actions
+            </h2>
+
+            <p>
+                Start working with your examination system
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div style="
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    ">
+
+        <a
+            href="{{ url_for('generate') }}"
+            class="primary-btn"
+        >
+
+            ⚡ Generate Question Paper
+
+        </a>
+
+
+        <a
+            href="{{ url_for('questions') }}"
+            class="secondary-btn"
+        >
+
+            ▣ View Question Bank
+
+        </a>
+
+
+        <a
+            href="{{ url_for('trace') }}"
+            class="secondary-btn"
+        >
+
+            🧠 View Algorithm Trace
+
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     QUESTION BANK PREVIEW
+========================================= -->
+
+<div class="question-section">
+
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                Question Bank
+            </h2>
+
+            <p>
+                Latest questions available in ExamForge
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('questions') }}"
+            class="secondary-btn"
+        >
+
+            View All
+
+        </a>
+
+    </div>
+
+
+    {% if questions %}
+
+
+        {% for question in questions[:6] %}
+
+
+        <div class="question">
+
+
+            <h3>
+
+                {{ loop.index }}.
+
+                {{ question["question"] }}
+
+            </h3>
+
+
+            <div class="question-info">
+
+
+                <span class="badge">
+
+                    Unit {{ question["unit"] }}
+
+                </span>
+
+
+                <span class="badge">
+
+                    {{ question["topic"] }}
+
+                </span>
+
+
+                <span class="badge">
+
+                    {{ question["difficulty"] }}
+
+                </span>
+
+
+                <span class="badge">
+
+                    {{ question["marks"] }} Marks
+
+                </span>
+
+
+                <span class="badge">
+
+                    Priority {{ question["priority"] }}
+
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <div class="no-results">
+
+            <h3>
+                No Questions Available
+            </h3>
+
+            <p>
+                Add questions to start building your question bank.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+
+<!-- =========================================
+     HOW EXAMFORGE WORKS
+========================================= -->
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h2>
+                How ExamForge Works
+            </h2>
+
+            <p>
+                Intelligent paper generation pipeline
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="trace-container">
+
+
+        <!-- STEP 1 -->
+
+        <div class="trace-card">
+
+            <h3>
+                01. Sorting
+            </h3>
+
+            <div class="trace-step">
+
+                <strong>
+                    PRIORITY SORTING
+                </strong>
+
+                <span>
+                    Questions are organized according to
+                    priority and marks.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- STEP 2 -->
+
+        <div class="trace-card">
+
+            <h3>
+                02. Greedy Selection
+            </h3>
+
+            <div class="trace-step">
+
+                <strong>
+                    INTELLIGENT SELECTION
+                </strong>
+
+                <span>
+                    The Greedy algorithm attempts to build
+                    a balanced question paper.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- STEP 3 -->
+
+        <div class="trace-card">
+
+            <h3>
+                03. Backtracking
+            </h3>
+
+            <div class="trace-step">
+
+                <strong>
+                    EXACT COMBINATION
+                </strong>
+
+                <span>
+                    Backtracking searches for an exact
+                    marks combination when required.
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<div class="footer">
+
+    ExamForge • Design and Analysis of Algorithms
+    • Intelligent Examination Platform
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,519 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>Generated Question Paper</h1>
+        <p>
+            Customized question paper generated using ExamForge.
+        </p>
+    </div>
+
+</div>
+
+
+{% if paper.success %}
+
+<!-- ======================================================
+     SUCCESS MESSAGE
+====================================================== -->
+
+<div class="success-card">
+
+    <div class="success-icon">
+        ✓
+    </div>
+
+    <div>
+        <h2>Question Paper Generated Successfully</h2>
+
+        <p>
+            ExamForge created the paper according to
+            your selected question pattern.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     PAPER SUMMARY
+====================================================== -->
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <span class="stat-label">
+            Easy
+        </span>
+
+        <strong class="stat-value">
+            {{ paper.easy_count }}
+        </strong>
+
+        <span class="stat-description">
+            × 2 Marks
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <span class="stat-label">
+            Medium
+        </span>
+
+        <strong class="stat-value">
+            {{ paper.medium_count }}
+        </strong>
+
+        <span class="stat-description">
+            × 4 Marks
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <span class="stat-label">
+            Hard
+        </span>
+
+        <strong class="stat-value">
+            {{ paper.hard_count }}
+        </strong>
+
+        <span class="stat-description">
+            × 6 Marks
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <span class="stat-label">
+            Total Marks
+        </span>
+
+        <strong class="stat-value">
+            {{ paper.total_marks }}
+        </strong>
+
+        <span class="stat-description">
+            Marks
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     QUESTION PAPER
+====================================================== -->
+
+<div class="form-card">
+
+    <div class="paper-header">
+
+    <!-- COLLEGE NAME -->
+
+    <div class="college-name">
+
+        {{ paper.college_name }}
+
+    </div>
+
+
+    <!-- EXAM TITLE -->
+
+    <h2>
+
+        {{ paper.exam_title }}
+
+    </h2>
+
+
+    <!-- SUBJECT -->
+
+    <div class="subject-name">
+
+        {{ paper.subject_name }}
+
+    </div>
+
+
+    <!-- SUBJECT CODE -->
+
+    <div class="exam-meta">
+
+        <span>
+            Subject Code:
+            <strong>
+                {{ paper.subject_code }}
+            </strong>
+        </span>
+
+        <span>
+            {{ paper.semester }}
+        </span>
+
+    </div>
+
+
+    <!-- EXAM DETAILS -->
+
+    <div class="exam-meta">
+
+        <span>
+            Duration:
+            <strong>
+                {{ paper.duration }}
+            </strong>
+        </span>
+
+        <span>
+            Maximum Marks:
+            <strong>
+                {{ paper.total_marks }}
+            </strong>
+        </span>
+
+    </div>
+
+</div>
+
+
+    <!-- EASY QUESTIONS -->
+
+    {% set easy_number = 1 %}
+
+    <div class="question-section">
+
+        <h3>
+            Section A — Very Short Questions
+        </h3>
+
+        <p class="section-description">
+            Easy Questions • 2 Marks Each
+        </p>
+
+
+        {% for question in paper.questions %}
+
+            {% if question.difficulty == "Easy" %}
+
+            <div class="question-card">
+
+                <div class="question-number">
+                    Q{{ loop.index }}
+                </div>
+
+                <div class="question-content">
+
+                    <p>
+                        {{ question.question }}
+                    </p>
+
+                    <span class="question-meta">
+                        Unit {{ question.unit }}
+                        |
+                        {{ question.topic }}
+                        |
+                        {{ question.marks }} Marks
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- MEDIUM QUESTIONS -->
+
+    <div class="question-section">
+
+        <h3>
+            Section B — Short Questions
+        </h3>
+
+        <p class="section-description">
+            Medium Questions • 4 Marks Each
+        </p>
+
+
+        {% for question in paper.questions %}
+
+            {% if question.difficulty == "Medium" %}
+
+            <div class="question-card">
+
+                <div class="question-number">
+                    Q{{ loop.index }}
+                </div>
+
+                <div class="question-content">
+
+                    <p>
+                        {{ question.question }}
+                    </p>
+
+                    <span class="question-meta">
+                        Unit {{ question.unit }}
+                        |
+                        {{ question.topic }}
+                        |
+                        {{ question.marks }} Marks
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- HARD QUESTIONS -->
+
+    <div class="question-section">
+
+        <h3>
+            Section C — Long Questions
+        </h3>
+
+        <p class="section-description">
+            Hard Questions • 6 Marks Each
+        </p>
+
+
+        {% for question in paper.questions %}
+
+            {% if question.difficulty == "Hard" %}
+
+            <div class="question-card">
+
+                <div class="question-number">
+                    Q{{ loop.index }}
+                </div>
+
+                <div class="question-content">
+
+                    <p>
+                        {{ question.question }}
+                    </p>
+
+                    <span class="question-meta">
+                        Unit {{ question.unit }}
+                        |
+                        {{ question.topic }}
+                        |
+                        {{ question.marks }} Marks
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- ==================================================
+         PAPER TOTAL
+    ================================================== -->
+
+    <div class="total-pattern">
+
+        <span>
+            Total Marks
+        </span>
+
+        <strong>
+            {{ paper.total_marks }}
+        </strong>
+
+    </div>
+
+
+    <!-- ==================================================
+         DOWNLOAD PDF
+    ================================================== -->
+
+    <form
+        method="POST"
+        action="{{ url_for('download_pdf') }}">
+
+        <input
+            type="hidden"
+            name="target_marks"
+            value="{{ paper.target_marks }}">
+
+        <input
+            type="hidden"
+            name="easy_count"
+            value="{{ paper.easy_count }}">
+
+        <input
+            type="hidden"
+            name="medium_count"
+            value="{{ paper.medium_count }}">
+
+        <input
+            type="hidden"
+            name="hard_count"
+            value="{{ paper.hard_count }}">
+
+
+        <button
+            type="submit"
+            class="primary-button">
+
+            Download Question Paper PDF
+
+        </button>
+
+    </form>
+    <a
+    href="{{ url_for('trace',
+        easy=paper.easy_count,
+        medium=paper.medium_count,
+        hard=paper.hard_count
+    ) }}"
+    class="secondary-button">
+
+    View Algorithm Trace
+
+</a>
+
+    
+
+</div>
+
+
+{% else %}
+
+<!-- ======================================================
+     ERROR MESSAGE
+====================================================== -->
+
+<div class="error-card">
+
+    <div class="error-icon">
+        !
+    </div>
+
+    <div>
+
+        <h2>
+            Question Paper Could Not Be Generated
+        </h2>
+
+        <p>
+            {{ paper.error }}
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     REQUESTED PATTERN
+====================================================== -->
+
+<div class="form-card">
+
+    <h2>
+        Requested Pattern
+    </h2>
+
+    <div class="pattern-grid">
+
+        <div class="pattern-item">
+
+            <span class="pattern-title">
+                Easy
+            </span>
+
+            <span class="pattern-info">
+                {{ paper.easy_count }}
+                × 2 Marks
+            </span>
+
+        </div>
+
+
+        <div class="pattern-item">
+
+            <span class="pattern-title">
+                Medium
+            </span>
+
+            <span class="pattern-info">
+                {{ paper.medium_count }}
+                × 4 Marks
+            </span>
+
+        </div>
+
+
+        <div class="pattern-item">
+
+            <span class="pattern-title">
+                Hard
+            </span>
+
+            <span class="pattern-info">
+                {{ paper.hard_count }}
+                × 6 Marks
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="total-pattern">
+
+        <span>
+            Required Total Marks
+        </span>
+
+        <strong>
+            {{ paper.target_marks }}
+        </strong>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('generate') }}"
+        class="primary-button">
+
+        ← Change Question Pattern
+
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

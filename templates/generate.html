@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ExamForge - Generate Paper</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app-layout">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                EF
+            </div>
+
+            <div>
+
+                <h1>
+                    ExamForge
+                </h1>
+
+                <span>
+                    Intelligent Exam Generator
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- MAIN MENU -->
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-title">
+                MAIN MENU
+            </div>
+
+
+            <a
+                href="{{ url_for('home') }}"
+                class="sidebar-link"
+            >
+
+                <span class="nav-icon">
+                    ◉
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('questions') }}"
+                class="sidebar-link"
+            >
+
+                <span class="nav-icon">
+                    ▣
+                </span>
+
+                <span>
+                    Question Bank
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('generate') }}"
+                class="sidebar-link generate-active"
+            >
+
+                <span class="nav-icon">
+                    ✦
+                </span>
+
+                <span>
+                    Generate Paper
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('history') }}"
+                class="sidebar-link"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Paper History
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- ALGORITHM -->
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-title">
+                ALGORITHMS
+            </div>
+
+
+            <a
+                href="{{ url_for(
+                    'trace',
+                    easy=3,
+                    medium=3,
+                    hard=2
+                ) }}"
+                class="sidebar-link"
+            >
+
+                <span class="nav-icon">
+                    ◎
+                </span>
+
+                <span>
+                    Algorithm Trace
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- BOTTOM STATUS -->
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        System Online
+                    </strong>
+
+                    <small>
+                        All services operational
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="topbar-label">
+                    EXAMFORGE / GENERATE PAPER
+                </span>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+
+                <div class="notification">
+                    🔔
+                </div>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        EF
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>
+                            Exam Administrator
+                        </strong>
+
+                        <span>
+                            Question Paper System
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================== -->
+
+        <section class="page-content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <span class="section-label">
+                        QUESTION PAPER GENERATOR
+                    </span>
+
+                    <h1>
+                        Generate Question Paper
+                    </h1>
+
+                    <p>
+                        Create a balanced college examination
+                        paper using Sorting, Greedy and
+                        Backtracking algorithms.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FORM
+            ================================================== -->
+
+            <form
+                id="generateForm"
+                method="POST"
+                action="{{ url_for('generate') }}"
+            >
+
+
+                <!-- =================================================
+                     EXAMINATION DETAILS
+                ================================================== -->
+
+                <div class="generate-card">
+
+                    <div class="generate-card-header">
+
+                        <div>
+
+                            <h2>
+                                Examination Details
+                            </h2>
+
+                            <p>
+                                Enter the information that should
+                                appear on the generated question paper.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="generate-grid">
+
+
+                        <!-- COLLEGE -->
+
+                        <div class="form-group">
+
+                            <label for="college_name">
+                                College / University Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="college_name"
+                                name="college_name"
+                                placeholder="Enter college or university name"
+                            >
+
+                        </div>
+
+
+                        <!-- SUBJECT -->
+
+                        <div class="form-group">
+
+                            <label for="subject_name">
+                                Subject Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="subject_name"
+                                name="subject_name"
+                                value="Design and Analysis of Algorithms"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- SUBJECT CODE -->
+
+                        <div class="form-group">
+
+                            <label for="subject_code">
+                                Subject Code
+                            </label>
+
+                            <input
+                                type="text"
+                                id="subject_code"
+                                name="subject_code"
+                                placeholder="Example: CS402"
+                            >
+
+                        </div>
+
+
+                        <!-- SEMESTER -->
+
+                        <div class="form-group">
+
+                            <label for="semester">
+                                Semester / Year
+                            </label>
+
+                            <input
+                                type="text"
+                                id="semester"
+                                name="semester"
+                                placeholder="Example: B.Tech II Year - Semester IV"
+                            >
+
+                        </div>
+
+
+                        <!-- EXAM TITLE -->
+
+                        <div class="form-group">
+
+                            <label for="exam_title">
+                                Examination Title
+                            </label>
+
+                            <input
+                                type="text"
+                                id="exam_title"
+                                name="exam_title"
+                                value="End Semester Examination"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- DURATION -->
+
+                        <div class="form-group">
+
+                            <label for="duration">
+                                Exam Duration
+                            </label>
+
+                            <input
+                                type="text"
+                                id="duration"
+                                name="duration"
+                                value="3 Hours"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TARGET MARKS
+                ================================================== -->
+
+                <div class="generate-card target-marks-section">
+
+                    <div class="generate-card-header">
+
+                        <h2>
+                            Target Total Marks
+                        </h2>
+
+                        <p>
+                            Select the total marks required for
+                            the examination paper.
+                        </p>
+
+                    </div>
+
+
+                    <div class="target-marks-layout">
+
+
+                        <div class="form-group">
+
+                            <label for="target_marks">
+                                Total Marks
+                            </label>
+
+                            <select
+                                id="target_marks"
+                                name="target_marks"
+                                onchange="updatePaperSummary()"
+                                required
+                            >
+
+                                <option value="10">
+                                    10 Marks
+                                </option>
+
+                                <option value="20">
+                                    20 Marks
+                                </option>
+
+                                <option
+                                    value="30"
+                                    selected
+                                >
+                                    30 Marks
+                                </option>
+
+                                <option value="40">
+                                    40 Marks
+                                </option>
+
+                                <option value="50">
+                                    50 Marks
+                                </option>
+
+                                <option value="60">
+                                    60 Marks
+                                </option>
+
+                                <option value="80">
+                                    80 Marks
+                                </option>
+
+                                <option value="100">
+                                    100 Marks
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="selected-total-box">
+
+                            <span>
+                                SELECTED TOTAL
+                            </span>
+
+                            <strong id="totalMarks">
+                                30
+                            </strong>
+
+                            <small>
+                                MARKS
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="targetStatus"
+                        class="target-status target-valid"
+                    >
+                        ✓ Pattern matches target marks.
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     QUESTION PATTERN
+                ================================================== -->
+
+                <div class="generate-card">
+
+                    <div class="generate-card-header">
+
+                        <h2>
+                            Question Pattern
+                        </h2>
+
+                        <p>
+                            Configure the number of Easy,
+                            Medium and Hard questions.
+                        </p>
+
+                    </div>
+
+
+                    <div class="difficulty-selection">
+
+
+                        <!-- EASY -->
+
+                        <div class="difficulty-option easy-option">
+
+                            <div class="difficulty-top">
+
+                                <div>
+
+                                    <span class="difficulty-label">
+                                        EASY
+                                    </span>
+
+                                    <h3>
+                                        Very Short
+                                    </h3>
+
+                                </div>
+
+                                <div class="marks-badge">
+                                    2 MARKS
+                                </div>
+
+                            </div>
+
+
+                            <p class="difficulty-description">
+
+                                Basic concept and definition
+                                based questions.
+
+                            </p>
+
+
+                            <div class="quantity-control">
+
+                                <button
+                                    type="button"
+                                    class="quantity-button"
+                                    onclick="
+                                        changeQuantity(
+                                            'easy',
+                                            -1
+                                        )
+                                    "
+                                >
+                                    −
+                                </button>
+
+
+                                <input
+                                    type="number"
+                                    id="easy"
+                                    name="easy_count"
+                                    value="3"
+                                    min="0"
+                                    max="20"
+                                    readonly
+                                >
+
+
+                                <button
+                                    type="button"
+                                    class="quantity-button"
+                                    onclick="
+                                        changeQuantity(
+                                            'easy',
+                                            1
+                                        )
+                                    "
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+
+                            <div class="question-count-text">
+
+                                <span>
+                                    Questions
+                                </span>
+
+                                <strong>
+                                    <span id="easySummary">
+                                        3
+                                    </span>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="marks-display">
+
+                                <span>
+                                    Section marks
+                                </span>
+
+                                <strong id="easyMarks">
+                                    6
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- MEDIUM -->
+
+                        <div class="difficulty-option medium-option">
+
+                            <div class="difficulty-top">
+
+                                <div>
+
+                                    <span class="difficulty-label">
+                                        MEDIUM
+                                    </span>
+
+                                    <h3>
+                                        Short Answer
+                                    </h3>
+
+                                </div>
+
+                                <div class="marks-badge">
+                                    4 MARKS
+                                </div>
+
+                            </div>
+
+
+                            <p class="difficulty-description">
+
+                                Application and explanation
+                                based questions.
+
+                            </p>
+
+
+                            <div class="quantity-control">
+
+                                <button
+                                    type="button"
+                                    class="quantity-button"
+                                    onclick="
+                                        changeQuantity(
+                                            'medium',
+                                            -1
+                                        )
+                                    "
+                                >
+                                    −
+                                </button>
+
+
+                                <input
+                                    type="number"
+                                    id="medium"
+                                    name="medium_count"
+                                    value="3"
+                                    min="0"
+                                    max="20"
+                                    readonly
+                                >
+
+
+                                <button
+                                    type="button"
+                                    class="quantity-button"
+                                    onclick="
+                                        changeQuantity(
+                                            'medium',
+                                            1
+                                        )
+                                    "
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+
+                            <div class="question-count-text">
+
+                                <span>
+                                    Questions
+                                </span>
+
+                                <strong>
+                                    <span id="mediumSummary">
+                                        3
+                                    </span>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="marks-display">
+
+                                <span>
+                                    Section marks
+                                </span>
+
+                                <strong id="mediumMarks">
+                                    12
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- HARD -->
+
+                        <div class="difficulty-option hard-option">
+
+                            <div class="difficulty-top">
+
+                                <div>
+
+                                    <span class="difficulty-label">
+                                        HARD
+                                    </span>
+
+                                    <h3>
+                                        Long Answer
+                                    </h3>
+
+                                </div>
+
+                                <div class="marks-badge">
+                                    6 MARKS
+                                </div>
+
+                            </div>
+
+
+                            <p class="difficulty-description">
+
+                                Problem solving and algorithm
+                                analysis based questions.
+
+                            </p>
+
+
+                            <div class="quantity-control">
+
+                                <button
+                                    type="button"
+                                    class="quantity-button"
+                                    onclick="
+                                        changeQuantity(
+                                            'hard',
+                                            -1
+                                        )
+                                    "
+                                >
+                                    −
+                                </button>
+
+
+                                <input
+                                    type="number"
+                                    id="hard"
+                                    name="hard_count"
+                                    value="2"
+                                    min="0"
+                                    max="20"
+                                    readonly
+                                >
+
+
+                                <button
+                                    type="button"
+                                    class="quantity-button"
+                                    onclick="
+                                        changeQuantity(
+                                            'hard',
+                                            1
+                                        )
+                                    "
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+
+                            <div class="question-count-text">
+
+                                <span>
+                                    Questions
+                                </span>
+
+                                <strong>
+                                    <span id="hardSummary">
+                                        2
+                                    </span>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="marks-display">
+
+                                <span>
+                                    Section marks
+                                </span>
+
+                                <strong id="hardMarks">
+                                    12
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PAPER SUMMARY
+                    ================================================== -->
+
+                    <div class="paper-summary">
+
+                        <div class="summary-header">
+
+                            <div>
+
+                                <span>
+                                    PAPER SUMMARY
+                                </span>
+
+                                <h3>
+                                    Examination Pattern
+                                </h3>
+
+                            </div>
+
+                            <div class="summary-total">
+
+                                <span>
+                                    TOTAL
+                                </span>
+
+                                <strong id="totalMarks2">
+                                    30
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-items">
+
+
+                            <div class="summary-item">
+
+                                <span class="summary-dot easy-dot"></span>
+
+                                <span>
+                                    Easy
+                                </span>
+
+                                <strong id="easySummary2">
+                                    3
+                                </strong>
+
+                                <small>
+                                    × 2 marks
+                                </small>
+
+                            </div>
+
+
+                            <div class="summary-item">
+
+                                <span class="summary-dot medium-dot"></span>
+
+                                <span>
+                                    Medium
+                                </span>
+
+                                <strong id="mediumSummary2">
+                                    3
+                                </strong>
+
+                                <small>
+                                    × 4 marks
+                                </small>
+
+                            </div>
+
+
+                            <div class="summary-item">
+
+                                <span class="summary-dot hard-dot"></span>
+
+                                <span>
+                                    Hard
+                                </span>
+
+                                <strong id="hardSummary2">
+                                    2
+                                </strong>
+
+                                <small>
+                                    × 6 marks
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ALGORITHM NOTE -->
+
+                    <div class="algorithm-note">
+
+                        <div class="algorithm-note-icon">
+                            ⚙
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                ExamForge Selection Engine
+                            </strong>
+
+                            <p>
+                                Questions are first organized using
+                                priority-based sorting. The Greedy
+                                algorithm selects questions according
+                                to the requested marks and difficulty
+                                distribution.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="generate-actions">
+
+                        <a
+                            href="{{ url_for('home') }}"
+                            class="secondary-btn"
+                        >
+                            ← Back to Dashboard
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            id="generateButton"
+                            class="primary-btn generate-main-button"
+                        >
+                            ✦ Generate Question Paper
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+
+            <!-- FOOTER -->
+
+            <footer class="footer">
+
+                ExamForge —
+                DAA Algorithm-Based
+                Intelligent Question Paper Generator
+
+            </footer>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+function changeQuantity(type, change) {
+
+    const input =
+        document.getElementById(type);
+
+    let currentValue =
+        parseInt(input.value) || 0;
+
+    let newValue =
+        currentValue + change;
+
+
+    if (newValue < 0) {
+        newValue = 0;
+    }
+
+
+    if (newValue > 20) {
+        newValue = 20;
+    }
+
+
+    input.value = newValue;
+
+    updatePaperSummary();
+
+}
+
+
+
+function updatePaperSummary() {
+
+    const easy =
+        parseInt(
+            document.getElementById("easy").value
+        ) || 0;
+
+
+    const medium =
+        parseInt(
+            document.getElementById("medium").value
+        ) || 0;
+
+
+    const hard =
+        parseInt(
+            document.getElementById("hard").value
+        ) || 0;
+
+
+    const target =
+        parseInt(
+            document.getElementById("target_marks").value
+        ) || 0;
+
+
+    /*
+     * Calculate marks
+     */
+
+    const easyMarks =
+        easy * 2;
+
+
+    const mediumMarks =
+        medium * 4;
+
+
+    const hardMarks =
+        hard * 6;
+
+
+    const selectedTotal =
+        easyMarks +
+        mediumMarks +
+        hardMarks;
+
+
+    /*
+     * Update marks
+     */
+
+    document.getElementById(
+        "easyMarks"
+    ).textContent = easyMarks;
+
+
+    document.getElementById(
+        "mediumMarks"
+    ).textContent = mediumMarks;
+
+
+    document.getElementById(
+        "hardMarks"
+    ).textContent = hardMarks;
+
+
+    document.getElementById(
+        "totalMarks"
+    ).textContent = selectedTotal;
+
+
+    document.getElementById(
+        "totalMarks2"
+    ).textContent = selectedTotal;
+
+
+    /*
+     * Update quantities
+     */
+
+    document.getElementById(
+        "easySummary"
+    ).textContent = easy;
+
+
+    document.getElementById(
+        "mediumSummary"
+    ).textContent = medium;
+
+
+    document.getElementById(
+        "hardSummary"
+    ).textContent = hard;
+
+
+    document.getElementById(
+        "easySummary2"
+    ).textContent = easy;
+
+
+    document.getElementById(
+        "mediumSummary2"
+    ).textContent = medium;
+
+
+    document.getElementById(
+        "hardSummary2"
+    ).textContent = hard;
+
+
+    /*
+     * Target validation
+     */
+
+    const status =
+        document.getElementById(
+            "targetStatus"
+        );
+
+
+    const button =
+        document.getElementById(
+            "generateButton"
+        );
+
+
+    if (selectedTotal === target) {
+
+        status.textContent =
+            "✓ Pattern matches target marks.";
+
+        status.className =
+            "target-status target-valid";
+
+        button.disabled = false;
+
+    }
+
+    else if (selectedTotal < target) {
+
+        const difference =
+            target - selectedTotal;
+
+        status.textContent =
+            "⚠ Need " +
+            difference +
+            " more marks to reach the target.";
+
+        status.className =
+            "target-status target-invalid";
+
+        button.disabled = true;
+
+    }
+
+    else {
+
+        const difference =
+            selectedTotal - target;
+
+        status.textContent =
+            "⚠ Selected pattern exceeds the target by " +
+            difference +
+            " marks.";
+
+        status.className =
+            "target-status target-invalid";
+
+        button.disabled = true;
+
+    }
+
+}
+
+
+/*
+ * Initialize
+ */
+
+updatePaperSummary();
+
+</script>
+
+
+</body>
+
+</html>
